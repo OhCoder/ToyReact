@@ -10,12 +10,11 @@ function replaceContent(range, node) {
 }
 
 // All wrapper class inside api need the same name with the DOM api if need,
-// like root, setAttribute, appendChild.
+// like setAttribute, appendChild.
 export class Component {
   constructor() {
     this.props = Object.create(null);
     this.children = [];
-    this._root = null;
     this._range = null;
   }
 

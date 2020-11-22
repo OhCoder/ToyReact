@@ -1,5 +1,6 @@
-// All wrapper class inside api need the same name with the DOM api,
-// like root, setAttribute, appendChild if need.
+const RENDER_TO_DOM = Symbol('render to dom');
+// All wrapper class inside api need the same name with the DOM api if need,
+// like root, setAttribute, appendChild.
 class ElementWrapper {
   constructor(type) {
     this.root = document.createElement(type);
@@ -10,13 +11,26 @@ class ElementWrapper {
   }
 
   appendChild(component) {
-    this.root.appendChild(component.root);
+    const range = document.createRange();
+    range.setStart(this.root, this.root.childNodes.length);
+    range.setEnd(this.root, this.root.childNodes.length);
+    component[RENDER_TO_DOM](range);
+  }
+
+  [RENDER_TO_DOM](range) {
+    range.deleteContents();
+    range.insertNode(this.root);
   }
 }
 
 class TextWrapper {
   constructor(content) {
     this.root = document.createTextNode(content);
+  }
+
+  [RENDER_TO_DOM](range) {
+    range.deleteContents();
+    range.insertNode(this.root);
   }
 }
 
@@ -35,17 +49,8 @@ export class Component {
     this.children.push(component);
   }
 
-  get root() {
-    if (!this.render) {
-      console.error('you need to add render function!!');
-      return null;
-    }
-
-    if (!this._root) {
-      this._root = this.render().root;
-    }
-
-    return this._root;
+  [RENDER_TO_DOM](range) {
+    this.render()[RENDER_TO_DOM](range);
   }
 }
 
@@ -80,9 +85,9 @@ export function createElement(type, attributes, ...children) {
 }
 
 export function render(component, parentElement) {
-  if (!component.root) {
-    return null;
-  }
-
-  parentElement.appendChild(component.root);
+  const range = document.createRange();
+  range.setStart(parentElement, 0);
+  range.setEnd(parentElement, parentElement.childNodes.length);
+  range.deleteContents();
+  component[RENDER_TO_DOM](range);
 }

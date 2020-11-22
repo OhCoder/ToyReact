@@ -1,4 +1,4 @@
-## This is a toy react project, just for learning.
+## This is a toy react project, just for learning react source code.
 #### The project demo is based on the [react tutorial](https://reactjs.org/tutorial/tutorial.html) demo [Tic Tac Toe](https://codepen.io/gaearon/pen/gWWZgR).
 
 ### Usage
@@ -10,7 +10,7 @@ npm i
 #### Play the game
 Open the *dist/main.html* file with Chrome.
 
-#### Update source code
+#### Modify toy react source code
 every time you changed the source code(like *main.js*, *toy-react.js*), you can run
 ```
 npx webpack

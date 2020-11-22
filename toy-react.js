@@ -128,30 +128,6 @@ class ElementWrapper extends Component {
     this.type = type;
   }
 
-  /*
-  setAttribute(name, value) {
-    if (name.match(/^on([\s\S]+)$/)) {
-      this.root.addEventListener(
-        RegExp.$1.replace(/^[\s\S]/, (c) => c.toLowerCase()),
-        value
-      );
-    } else {
-      if (name === "className") {
-        this.root.setAttribute("class", value);
-      } else {
-        this.root.setAttribute(name, value);
-      }
-    }
-  }
-
-  appendChild(component) {
-    const range = document.createRange();
-    range.setStart(this.root, this.root.childNodes.length);
-    range.setEnd(this.root, this.root.childNodes.length);
-    component[RENDER_TO_DOM](range);
-  }
-  */
-
   get vdom() {
     this.vchildren = this.children.map((child) => child.vdom);
     return this;
